@@ -38,5 +38,16 @@ def cleaning(input_file_path, output_file_name):
     for column in data.columns:
         data[column].fillna(data[column].mode()[0], inplace= True)
 
+
+    # transforming the Age_Bucket variable to numaric. 
+    data.replace(to_replace={
+        ">75": 0,
+        "65-75": 1,
+        "55-65": 2,
+        "<55": 3
+    },
+    inplace= True)
+
+
     # output file
     data.to_csv(str(output_file_name), index=False)
