@@ -3,9 +3,11 @@ This is the pipeline function in which all of us will be coding the transformati
 for each variables buckets.
 """
 
+import pandas as pd
+import numpy as np 
+
 def cleaning(input_file_path, output_file_name):
 
-    import pandas as pd
     data = pd.read_excel(str(input_file_path), sheet_name=1)
 
     # transformation for variables with Y and N
@@ -25,6 +27,16 @@ def cleaning(input_file_path, output_file_name):
 
     # Transformation for variables with "VLR_LR" and "HR_VHR"
     data.replace(to_replace={'VLR_LR': 1, 'HR_VHR': 0}, inplace=True)
+
+    # raplacing the missing values into actual null values. "Unknown" => "NULL" 
+    data.replace(
+        ["Other/Unknown", "Unknown"],
+        np.nan
+    )
+
+    # replacing all the null values with the mode of the column 
+    for column in data.columns:
+        data[column].fillna(data[column].mode()[0], inplace= True)
 
     # output file
     data.to_csv(str(output_file_name), index=False)
