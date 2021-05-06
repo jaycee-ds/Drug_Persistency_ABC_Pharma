@@ -17,9 +17,7 @@ def cleaning(input_file_path, output_file_name):
     Guys, write your code in between. The output file code (below) is the end of the function :)
     """
     # Clinical Factors
-    # # for Ntm_Speciality: Eliminate Unknown rows and group rare categories as other
-
-    data = data[data['Ntm_Speciality'] != 'Unknown']
+    # # for Ntm_Speciality: group rare categories as OTHER
 
     data['Ntm_Speciality'] = data['Ntm_Speciality'].mask(data['Ntm_Speciality'].map(data['Ntm_Speciality'].value_counts(normalize=True)) < 0.01, 'OTHER')
     
