@@ -3,13 +3,10 @@ This is the pipeline function in which all of us will be coding the transformati
 for each variable bucket.
 """
 
-import pandas as pd
-import numpy as np 
-from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import LabelEncoder, OneHotEncoder
-
 
 def cleaning(input_file_path, output_file_name):
+    import pandas as pd
+    import numpy as np
 
     data = pd.read_excel(str(input_file_path), sheet_name=1)
 
@@ -57,30 +54,32 @@ def cleaning(input_file_path, output_file_name):
     data.to_csv(str(output_file_name), index=False)
 
 
-
-
-def altClearning(input_file_path, output_file_name):
+def altCleaning(input_file_path):
+    import pandas as pd
+    import numpy as np
+    from sklearn.impute import SimpleImputer
+    from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 
     data = pd.read_excel(str(input_file_path), sheet_name=1)
 
     # Elimination of variables with more than 40% missing values
-    data = data.drop(columns = ['Risk_Segment_During_Rx',
-                                    'Tscore_Bucket_During_Rx',
-                                    'Change_T_Score',
-                                    'Change_Risk_Segment'])
+    data = data.drop(columns=['Risk_Segment_During_Rx',
+                              'Tscore_Bucket_During_Rx',
+                              'Change_T_Score',
+                              'Change_Risk_Segment'])
 
-    # raplacing the missing values into actual null values. "Unknown" => "NULL" 
+    # replacing the missing values into actual null values. "Unknown" => "NULL"
     data.replace(
         ["Other/Unknown", "Unknown"],
         np.nan
     )
 
-    # splitting the descriptive variabels from the target variable 
-    features = data.iloc[:,2:]
+    # splitting the descriptive variables from the target variable
+    features = data.iloc[:, 2:]
     target = data.Persistency_Flag
 
     # transformations 
-    imputer = SimpleImputer(strategy= "most_frequent")
+    imputer = SimpleImputer(strategy="most_frequent")
     label_encoder = LabelEncoder()
     ohe = OneHotEncoder()
 
@@ -93,6 +92,10 @@ def altClearning(input_file_path, output_file_name):
     features = imputer.fit_transform(features)
     features = ohe.fit_transform(features).toarray()
     target = label_encoder.fit_transform(target)
+
+    # Assigning the variables X and Y
+    X = features
+    Y = target
 
     # returning the features and the labels
     return X, Y
