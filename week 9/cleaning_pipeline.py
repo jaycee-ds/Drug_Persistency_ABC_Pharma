@@ -8,7 +8,7 @@ def cleaning(input_file_path, output_file_name):
     import pandas as pd
     import numpy as np
 
-    data = pd.read_excel(str(input_file_path), sheet_name=1)
+    data = pd.read_excel(str(input_file_path), sheet_name=1, engine='openpyxl')
 
     # transformation for variables with Y and N
     data.replace(to_replace={'Y': 1, 'N': 0}, inplace=True)
@@ -21,15 +21,18 @@ def cleaning(input_file_path, output_file_name):
 
     # Elimination of variables with more than 40% missing values
     data = data.drop(columns=['Risk_Segment_During_Rx',
-                              'Tscore_Bucket_During_Rx',
                               'Change_T_Score',
                               'Change_Risk_Segment'])
+
+    # Transformation for variables from another column
+    data['Tscore_Bucket_During_Rx'] = np.where(data['Tscore_Bucket_During_Rx'] == 'Unknown', data['Tscore_Bucket_Prior_Ntm'], data['Tscore_Bucket_During_Rx'])
 
     # Transformation for variables with ">-2.5" and "<=-2.5"
     data.replace(to_replace={'>-2.5': 1, '<=-2.5': 0}, inplace=True)
 
     # Transformation for variables with "VLR_LR" and "HR_VHR"
     data.replace(to_replace={'VLR_LR': 1, 'HR_VHR': 0}, inplace=True)
+
 
     # replacing the missing values into actual null values. "Unknown" => "NULL"
     data.replace(
