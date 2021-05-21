@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="/static/style.css">
+	<title>Prediction Using Flask - DG</title>
+</head>
+
+	<body>
+		<h1><div style="text-align:center"><font color='blue'>Will the patient be persistent or not with the treatment?</font></div></h1>
+		<hr>
+		</br>	
+
+		<h2><div style="text-align:center">Enter the values </div></h2>
+
+		</br>
+
+		<div style="text-align:center" class='container'>
+			<div class='row'>
+				<div class='col-6'>
+					<form method="POST" action="/predict">
+
+						<div class='form-group'>
+							<label for="var_1"><p class="font-weight-bold">Dexa_Freq_During_Rx <br> (number of times)</p></label>
+							<input type='text' name="var_1">
+						</div>
+
+						<div class='form-group'>
+							<label for="var_2"><p class="font-weight-bold">Dexa_During_Rx <br> (0 for No or 1 for Yes)</p></label>
+							<input type='text' name="var_2">
+							
+						</div>
+						<div class='form-group'>
+								<label for="var_3"><p class="font-weight-bold">Comorb_Long_Term_Current_Drug_Therapy <br> (0 for No or 1 for Yes)</p></label>
+								<input type='text' name="var_3">
+								
+						</div>
+						<div class='form-group'>
+							<label for="var_4"><p class="font-weight-bold">Comorb_Encntr_For_General_Exam_W_O_Complaint <br> (0 for No or 1 for Yes)</p></label>
+							<input type='text' name="var_4">
+									
+						</div>
+						<div class='form-group'>
+							<label for="var_5"><p class="font-weight-bold">Comorb_Encounter_For_Screening_For_Malignant_Neoplasms <br> (0 for No or 1 for Yes)</p></label>
+							<input type='text' name="var_5">
+										
+						</div>
+
+							<input class='btn btn-primary' type='submit' value='Submit'>
+
+					</form>
+				</div>
+			</div>
+		</div>	
+		
+	</body>
+</html>
