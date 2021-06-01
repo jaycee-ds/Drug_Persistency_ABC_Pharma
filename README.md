@@ -1,5 +1,4 @@
-### Project Name
-### Persistency of a drug prediction model.
+### Project Name: Persistency of a drug prediction model.
 
 #### -- Project Status: [Completed]
 
